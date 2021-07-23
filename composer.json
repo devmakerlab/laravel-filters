@@ -1,0 +1,40 @@
+{
+    "name": "devmakerlab/laravel-filters",
+    "type": "library",
+    "license": "WTFPL",
+    "autoload": {
+        "psr-4": {
+            "DevMakerLab\\LaravelFilters\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Tests\\Example\\": "tests/Example"
+        }
+    },
+    "authors": [
+        {
+            "name": "Valentin Leguy",
+            "email": "leguy.val@gmail.com"
+        },
+        {
+            "name": "Anthony Meinder",
+            "email": "anthony@meinder.dev"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^8.50"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3",
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "^6.19",
+        "devmakerlab/entities": "^3.0.1"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
+    }
+}
