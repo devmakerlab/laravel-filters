@@ -8,7 +8,7 @@ Need some filters? This package is based on the Repository Design Pattern to let
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Example with Laravel](#example-with-laravel)
+* [Example](#example)
 
 ## Installation
 <small>⚠️ Requires >= PHP 7.4 ⚠️</small>
