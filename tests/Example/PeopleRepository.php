@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Example;
 
+use Tests\Example\Entities\PeopleEntity;
 use Tests\Example\Entities\PeopleEntityList;
 use DevMakerLab\LaravelFilters\AbstractFilterableRepository;
 
@@ -31,11 +32,11 @@ class PeopleRepository extends AbstractFilterableRepository
     public function transform(\Illuminate\Support\Collection $people): PeopleEntityList
     {
         $people->transform(function ($person) {
-            return [
+            return new PeopleEntity([
                 'name' => sprintf('%s %s', $person->lastname, $person->firstname),
                 'age' => $person->age,
                 'gender' => $person->gender,
-            ];
+            ]);
         });
 
         return new PeopleEntityList($people->toArray());

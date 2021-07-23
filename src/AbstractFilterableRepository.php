@@ -22,7 +22,7 @@ abstract class AbstractFilterableRepository
             throw new FilterClassNotFound();
         }
 
-        if (! is_subclass_of($filter, FilterInterface::class)) {
+        if (! is_subclass_of($filter, AbstractFilter::class)) {
             throw new IncorrectFilterException($filter);
         }
 
@@ -55,11 +55,11 @@ abstract class AbstractFilterableRepository
     public function applyFilters(Builder &$builder, array $args): self
     {
         foreach ($this->filters as $filter) {
-            $neededKeys = $filter::neededKeys();
-            $neededArgs = $this->extractNeededArgs($neededKeys, $args);
+            $neededArgs = $this->extractNeededArgs($filter, $args);
 
             if ($filter::isApplicable($neededArgs)) {
-                (new $filter)->apply($builder, $neededArgs);
+                $filterInstance = new $filter($neededArgs);
+                $filterInstance->apply($builder);
             }
         }
 
@@ -73,8 +73,8 @@ abstract class AbstractFilterableRepository
         return $this;
     }
 
-    private function extractNeededArgs(array $neededKeys, array $args): array
+    private function extractNeededArgs(string $class, array $args): array
     {
-        return array_intersect_key($args, array_flip($neededKeys));
+        return array_intersect_key($args, array_flip(array_keys(get_class_vars($class))));
     }
 }

@@ -6,10 +6,10 @@ namespace DevMakerLab\LaravelFilters;
 
 use Exception;
 
-class IncorrectFilterException extends Exception
+class NoApplyFilterRuleException extends Exception
 {
     public function __construct(string $class)
     {
-        parent::__construct(sprintf('Class `%s` does not extends AbstractFilter.', $class));
+        parent::__construct(sprintf('Filter class `%s` has no apply function.', $class));
     }
 }

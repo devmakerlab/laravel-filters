@@ -82,24 +82,15 @@ OldPeopleFilter.php
 declare(strict_types=1);
 
 use Illuminate\Database\Query\Builder;
+use DevMakerLab\LaravelFilters\AbstractFilter;
 
-class OldPeopleFilter implements FilterInterface
+class OldPeopleFilter extends AbstractFilter
 {
-    public static function neededKeys(): array
-    {
-        return ['age'];
-    }
+    public int $age;
 
-    public static function isApplicable(...$args): bool
+    public function apply(Builder &$queryBuilder): void
     {
-        return true;
-    }
-
-    public function apply(Builder &$queryBuilder, ...$args): void
-    {
-        $age = $args[0][self::neededKeys()[0]];
-
-        $queryBuilder->where('age', '>=', $age);
+        $queryBuilder->where('age', '>=', $this->age);
     }
 }
 ```
