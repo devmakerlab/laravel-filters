@@ -14,8 +14,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        parent::afterApplicationCreated(function () {
-            Schema::create('people', function (Blueprint $table) {
+        parent::afterApplicationCreated(function (): void {
+            Schema::create('people', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->string('firstname');
                 $table->string('lastname');

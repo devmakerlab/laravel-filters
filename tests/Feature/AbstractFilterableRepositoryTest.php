@@ -15,8 +15,8 @@ class AbstractFilterableRepositoryTest extends TestCase
         parent::setUp();
     }
 
-    /** @test */
-    public function can_get_old_people()
+    /** */
+    public function testCan_get_old_people(): void
     {
         $peopleRepository = $this->instantiatePeopleRepository();
 
@@ -27,4 +27,3 @@ class AbstractFilterableRepositoryTest extends TestCase
         $this->assertInstanceOf(PeopleEntityList::class, $people);
     }
 }
-
