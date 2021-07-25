@@ -30,7 +30,7 @@ abstract class AbstractFilter
     /**
      * @throws NoApplyFilterRuleException
      */
-    public function apply(Builder &$queryBuilder): void
+    public function apply(Builder $queryBuilder): void
     {
         throw new NoApplyFilterRuleException(self::class);
     }

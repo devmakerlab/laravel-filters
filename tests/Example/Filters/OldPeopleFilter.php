@@ -11,7 +11,7 @@ class OldPeopleFilter extends AbstractFilter
 {
     public int $age;
 
-    public function apply(Builder &$queryBuilder): void
+    public function apply(Builder $queryBuilder): void
     {
         $queryBuilder->where('age', '>=', $this->age);
     }
