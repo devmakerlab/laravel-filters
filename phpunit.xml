@@ -17,6 +17,9 @@
         <include>
             <directory suffix=".php">src/</directory>
         </include>
+        <report>
+            <html outputDirectory="tests/reports/report" lowUpperBound="35" highLowerBound="70"/>
+        </report>
     </coverage>
     <testsuites>
         <testsuite name="Unit">
@@ -26,6 +29,9 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <testdoxText outputFile="tests/reports/testdox.txt"/>
+    </logging>
     <php>
         <env name="DB_CONNECTION" value="testing"/>
         <env name="APP_KEY" value="base64:bWVpbmRlci1hL2ZpbHRlcnMKc3RhciBpdCE="/>

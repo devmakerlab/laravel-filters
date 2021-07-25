@@ -5,15 +5,11 @@ declare(strict_types=1);
 use Tests\TestCase;
 use Tests\Example\Filters\OldPeopleFilter;
 use Tests\Example\Entities\PeopleEntityList;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AbstractFilterableRepositoryTest extends TestCase
+class PeopleRepositoryTest extends TestCase
 {
-    use \Illuminate\Foundation\Testing\DatabaseTransactions;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
+    use DatabaseTransactions;
 
     /** */
     public function testCan_get_old_people(): void
@@ -21,22 +17,23 @@ class AbstractFilterableRepositoryTest extends TestCase
         $peopleRepository = $this->instantiatePeopleRepository();
 
         $this->createPeople([
-                [
-                    'firstname' => 'Snoop',
-                    'lastname' => 'Dogg',
-                    'gender' => 'male',
-                    'age' => 49,
-                ],
-                [
-                    'firstname' => 'Danielle',
-                    'lastname' => 'Studio',
-                    'gender' => 'female',
-                    'age' => 67,
-                ],
-            ]);
+            [
+                'firstname' => 'Snoop',
+                'lastname' => 'Dogg',
+                'gender' => 'male',
+                'age' => 49,
+            ],
+            [
+                'firstname' => 'Danielle',
+                'lastname' => 'Studio',
+                'gender' => 'female',
+                'age' => 67,
+            ],
+        ]);
 
         $people = $peopleRepository
             ->addFilter(OldPeopleFilter::class)
+            ->limit(1)
             ->get(['age' => 60]);
 
         $this->assertInstanceOf(PeopleEntityList::class, $people);
