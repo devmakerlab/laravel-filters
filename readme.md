@@ -2,6 +2,13 @@
 <img src="https://user-images.githubusercontent.com/51158042/126819815-69be48fa-40a8-49e4-81ca-d3ebc1d3d521.png">
 </p>
 
+<p align="center">
+<a href="https://scrutinizer-ci.com/g/devmakerlab/laravel-filters/"><img src="https://scrutinizer-ci.com/g/devmakerlab/laravel-filters/badges/build.png?b=master" alt="Build Status"></a>
+<a href="https://packagist.org/packages/devmakerlab/laravel-filters"><img src="https://img.shields.io/packagist/v/devmakerlab/laravel-filters.svg" alt="Latest Version on Packagist"></a>
+<a href='https://packagist.org/packages/devmakerlab/laravel-filters'><img src="https://img.shields.io/packagist/dt/devmakerlab/laravel-filters.svg?style=flat-square"/></a> 
+</p>
+
+
 # DevMakerLab/Laravel-Filters
 
 Need some filters? This package is based on the Repository Design Pattern to let you create specific queries easily.
