@@ -29,4 +29,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         return new PeopleRepository($this->app['db']);
     }
+
+    public function createPeople(array $peoples)
+    {
+        $this->app['db']
+            ->table('people')
+            ->insert($peoples);
+    }
 }
