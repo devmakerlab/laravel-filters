@@ -7,7 +7,7 @@ use Tests\Example\Filters\OldPeopleFilter;
 use Tests\Example\Entities\PeopleEntityList;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AbstractFilterableRepositoryTest extends TestCase
+class PeopleRepositoryTest extends TestCase
 {
     use DatabaseTransactions;
 
