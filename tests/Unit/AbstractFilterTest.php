@@ -10,7 +10,8 @@ class AbstractFilterTest extends TestCase
 {
     public function testExceptionThrownWhenNoApplyFunctionOverride(): void
     {
-        $filter = new class extends AbstractFilter {};
+        $filter = new class extends AbstractFilter {
+        };
 
         $this->expectException(NoApplyFilterRuleException::class);
 

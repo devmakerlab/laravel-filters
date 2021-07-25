@@ -12,7 +12,8 @@ class AbstractFilterableRepositoryTest extends TestCase
 {
     public function testExceptionThrownWhenAddingNonExistingFilter(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {};
+        $abstractRepository = new class extends AbstractFilterableRepository {
+        };
 
         $this->expectException(FilterClassNotFound::class);
         $abstractRepository->addFilter(FooFilter::class);
@@ -20,8 +21,10 @@ class AbstractFilterableRepositoryTest extends TestCase
 
     public function testExceptionThrownWhenAddingFilterWhichIsNotExtendingAbstractFilter(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {};
-        $filter = new class {};
+        $abstractRepository = new class extends AbstractFilterableRepository {
+        };
+        $filter = new class {
+        };
 
         $this->expectException(IncorrectFilterException::class);
         $abstractRepository->addFilter(get_class($filter));
@@ -36,7 +39,8 @@ class AbstractFilterableRepositoryTest extends TestCase
             }
         };
 
-        $filter = new class extends AbstractFilter {};
+        $filter = new class extends AbstractFilter {
+        };
 
         $abstractRepository->addFilter(get_class($filter));
 
@@ -53,7 +57,8 @@ class AbstractFilterableRepositoryTest extends TestCase
             }
         };
 
-        $filter = new class extends AbstractFilter {};
+        $filter = new class extends AbstractFilter {
+        };
 
         $abstractRepository->addFilter(get_class($filter));
         $this->assertCount(1, $abstractRepository->getFilters());
