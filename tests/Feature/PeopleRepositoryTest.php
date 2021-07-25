@@ -7,7 +7,7 @@ use Tests\Example\Filters\OldPeopleFilter;
 use Tests\Example\Entities\PeopleEntityList;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AbstractFilterableRepositoryTest extends TestCase
+class PeopleRepositoryTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -33,6 +33,7 @@ class AbstractFilterableRepositoryTest extends TestCase
 
         $people = $peopleRepository
             ->addFilter(OldPeopleFilter::class)
+            ->limit(1)
             ->get(['age' => 60]);
 
         $this->assertInstanceOf(PeopleEntityList::class, $people);
