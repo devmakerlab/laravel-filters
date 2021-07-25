@@ -32,7 +32,7 @@ class AbstractFilterableRepositoryTest extends TestCase
                     'lastname' => 'Studio',
                     'gender' => 'female',
                     'age' => 67,
-                ]
+                ],
             ]);
 
         $people = $peopleRepository
