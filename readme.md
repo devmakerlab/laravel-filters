@@ -4,6 +4,7 @@
 
 <p align="center">
 <a href="https://scrutinizer-ci.com/g/devmakerlab/laravel-filters/"><img src="https://scrutinizer-ci.com/g/devmakerlab/laravel-filters/badges/build.png?b=master" alt="Build Status"></a>
+<a href="https://scrutinizer-ci.com/g/devmakerlab/laravel-filters/?branch=master"><img src="https://scrutinizer-ci.com/g/devmakerlab/laravel-filters/badges/coverage.png?b=master" alt="Code Coverage"></a>
 <a href="https://packagist.org/packages/devmakerlab/laravel-filters"><img src="https://img.shields.io/packagist/v/devmakerlab/laravel-filters.svg" alt="Latest Version on Packagist"></a>
 <a href='https://packagist.org/packages/devmakerlab/laravel-filters'><img src="https://img.shields.io/packagist/dt/devmakerlab/laravel-filters.svg?style=flat-square"/></a> 
 </p>
