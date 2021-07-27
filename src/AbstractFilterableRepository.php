@@ -8,7 +8,7 @@ use Illuminate\Database\Query\Builder;
 
 abstract class AbstractFilterableRepository
 {
-    protected array $filters;
+    protected array $filters = [];
 
     protected ?int $limit = null;
 
