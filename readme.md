@@ -28,6 +28,37 @@ composer require devmakerlab/laravel-filters
 
 This package offers an abstract class `AbstractFilterableRepository` which needs to be extended to implement the features of this package.
 
+
+PeopleService.php
+```php
+<?php
+    ...
+    $peopleRepository = new PeopleRepository($databaseManager);
+    
+    $people = $peopleRepository
+            ->addFilter(OldPeopleFilter::class)
+            ->get(['age' => 60]);
+```
+
+OldPeopleFilter.php
+```php
+<?php
+
+declare(strict_types=1);
+
+use ...
+
+class OldPeopleFilter extends AbstractFilter
+{
+    public int $age;
+
+    public function apply(Builder $queryBuilder): void
+    {
+        $queryBuilder->where('age', '>=', $this->age);
+    }
+}
+```
+
 PeopleRepository.php
 ```php
 <?php
@@ -58,37 +89,6 @@ class PeopleRepository extends AbstractFilterableRepository
         });
 
         return $people->toArray();
-    }
-}
-```
-
-PeopleService.php
-```php
-<?php
-    ...
-    $peopleRepository = new PeopleRepository($databaseManager);
-    
-    $people = $peopleRepository
-            ->addFilter(OldPeopleFilter::class)
-            ->get(['age' => 60]);
-```
-
-OldPeopleFilter.php
-```php
-<?php
-
-declare(strict_types=1);
-
-use Illuminate\Database\Query\Builder;
-use DevMakerLab\LaravelFilters\AbstractFilter;
-
-class OldPeopleFilter extends AbstractFilter
-{
-    public int $age;
-
-    public function apply(Builder $queryBuilder): void
-    {
-        $queryBuilder->where('age', '>=', $this->age);
     }
 }
 ```
