@@ -50,7 +50,7 @@ class AbstractFilterableRepositoryTest extends TestCase
         };
 
         $this->expectException(IncorrectFilterException::class);
-        $abstractRepository->addFilter(get_class($filter));
+        $abstractRepository->addFilter(\get_class($filter));
     }
 
     public function testCanAddFilter(): void
@@ -60,10 +60,10 @@ class AbstractFilterableRepositoryTest extends TestCase
         $filter = new class extends AbstractFilter {
         };
 
-        $abstractRepository->addFilter(get_class($filter));
+        $abstractRepository->addFilter(\get_class($filter));
 
         $this->assertCount(1, $abstractRepository->getFilters());
-        $this->assertSame(get_class($filter), $abstractRepository->getFilters()[0]);
+        $this->assertSame(\get_class($filter), $abstractRepository->getFilters()[0]);
     }
 
     public function testCanResetFilters(): void
@@ -73,7 +73,7 @@ class AbstractFilterableRepositoryTest extends TestCase
         $filter = new class extends AbstractFilter {
         };
 
-        $abstractRepository->addFilter(get_class($filter));
+        $abstractRepository->addFilter(\get_class($filter));
         $this->assertCount(1, $abstractRepository->getFilters());
 
         $abstractRepository->resetFilters();

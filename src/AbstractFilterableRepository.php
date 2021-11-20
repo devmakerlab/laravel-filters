@@ -74,7 +74,7 @@ abstract class AbstractFilterableRepository
             if (method_exists($this, 'transform')) {
                 return $this->transform($result);
             } else {
-                throw new TransformMethodNotImplementedException(get_class($this));
+                throw new TransformMethodNotImplementedException(static::class);
             }
         }
 
