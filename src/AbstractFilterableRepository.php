@@ -5,12 +5,21 @@ declare(strict_types=1);
 namespace DevMakerLab\LaravelFilters;
 
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\DatabaseManager;
 
 abstract class AbstractFilterableRepository
 {
-    protected array $filters;
-
+    protected string $table;
+    protected array $attributes = [];
     protected ?int $limit = null;
+    protected array $filters = [];
+
+    protected DatabaseManager $databaseManager;
+
+    public function __construct(DatabaseManager $databaseManager)
+    {
+        $this->databaseManager = $databaseManager;
+    }
 
     /**
      * @throws FilterClassNotFound
@@ -50,6 +59,26 @@ abstract class AbstractFilterableRepository
         $this->limit = null;
 
         return $this;
+    }
+
+    public function get(array $args = []): iterable
+    {
+        $queryBuilder = $this->databaseManager->table($this->table)
+            ->select($this->attributes);
+
+        $this->applyFilters($queryBuilder, $args);
+
+        $result = $queryBuilder->get();
+
+        if (property_exists($this, 'shouldTransform') && $this->shouldTransform === true) {
+            if (method_exists($this, 'transform')) {
+                return $this->transform($result);
+            } else {
+                throw new TransformMethodNotImplementedException(get_class($this));
+            }
+        }
+
+        return $result;
     }
 
     public function applyFilters(Builder &$builder, array $args): self
