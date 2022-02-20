@@ -46,8 +46,7 @@ OldPeopleFilter.php
 
 declare(strict_types=1);
 
-use Illuminate\Database\Query\Builder;
-use DevMakerLab\LaravelFilters\AbstractFilter;
+use ...
 
 class OldPeopleFilter extends AbstractFilter
 {
@@ -66,27 +65,17 @@ PeopleRepository.php
 
 declare(strict_types=1);
 
-use DevMakerLab\LaravelFilters\AbstractFilterableRepository;
+use ...
 
-class PeopleRepository extends AbstractFilterableRepository
+class PeopleRepository extends AbstractFilterableRepository 
 {
-    private DatabaseManager $databaseManager;
+    protected string $table = 'people';
+    protected array $attributes = ['firstname', 'lastname', 'age', 'gender'];
+    protected bool $shouldTransform = true;
 
     public function __construct(DatabaseManager $databaseManager)
     {
-        $this->databaseManager = $databaseManager;
-    }
-
-    public function get(array $args): array
-    {
-        $queryBuilder = $this->databaseManager->table('people')
-            ->select(['firstname', 'lastname', 'age', 'gender']);
-
-        $this->applyFilters($queryBuilder, $args);
-
-        $people = $queryBuilder->get();
-
-        return $this->transform($people);
+        parent::__construct($databaseManager);
     }
 
     public function transform(Collection $people): array

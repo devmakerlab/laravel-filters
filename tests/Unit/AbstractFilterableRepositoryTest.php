@@ -2,18 +2,41 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit;
+
 use Tests\TestCase;
+use Illuminate\Support\Collection;
 use DevMakerLab\LaravelFilters\AbstractFilter;
 use DevMakerLab\LaravelFilters\FilterClassNotFound;
 use DevMakerLab\LaravelFilters\IncorrectFilterException;
-use DevMakerLab\LaravelFilters\AbstractFilterableRepository;
+use DevMakerLab\LaravelFilters\TransformMethodNotImplementedException;
 
 class AbstractFilterableRepositoryTest extends TestCase
 {
+    public function testExceptionThrownWhenAskedForTransformWithoutDefiningTransformMethod(): void
+    {
+        $abstractRepository = $this->getAbstractRepository();
+
+        $this->expectException(TransformMethodNotImplementedException::class);
+        $abstractRepository->get();
+    }
+
+    public function testCanGet(): void
+    {
+        $abstractRepository = $this->getAbstractRepository(false);
+
+        $result = $abstractRepository->get();
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(2, $result);
+        $this->assertSame([
+            'first item',
+            'second item',
+        ], $result->toArray());
+    }
+
     public function testExceptionThrownWhenAddingNonExistingFilter(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {
-        };
+        $abstractRepository = $this->getAbstractRepository();
 
         $this->expectException(FilterClassNotFound::class);
         $abstractRepository->addFilter(FooFilter::class);
@@ -21,46 +44,36 @@ class AbstractFilterableRepositoryTest extends TestCase
 
     public function testExceptionThrownWhenAddingFilterWhichIsNotExtendingAbstractFilter(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {
-        };
+        $abstractRepository = $this->getAbstractRepository();
+
         $filter = new class {
         };
 
         $this->expectException(IncorrectFilterException::class);
-        $abstractRepository->addFilter(get_class($filter));
+        $abstractRepository->addFilter(\get_class($filter));
     }
 
     public function testCanAddFilter(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {
-            public function getFilters(): array
-            {
-                return $this->filters;
-            }
-        };
+        $abstractRepository = $this->getAbstractRepository();
 
         $filter = new class extends AbstractFilter {
         };
 
-        $abstractRepository->addFilter(get_class($filter));
+        $abstractRepository->addFilter(\get_class($filter));
 
         $this->assertCount(1, $abstractRepository->getFilters());
-        $this->assertSame(get_class($filter), $abstractRepository->getFilters()[0]);
+        $this->assertSame(\get_class($filter), $abstractRepository->getFilters()[0]);
     }
 
     public function testCanResetFilters(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {
-            public function getFilters(): array
-            {
-                return $this->filters;
-            }
-        };
+        $abstractRepository = $this->getAbstractRepository();
 
         $filter = new class extends AbstractFilter {
         };
 
-        $abstractRepository->addFilter(get_class($filter));
+        $abstractRepository->addFilter(\get_class($filter));
         $this->assertCount(1, $abstractRepository->getFilters());
 
         $abstractRepository->resetFilters();
@@ -69,12 +82,7 @@ class AbstractFilterableRepositoryTest extends TestCase
 
     public function testCanSpecifyLimit(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {
-            public function getLimit(): ?int
-            {
-                return $this->limit;
-            }
-        };
+        $abstractRepository = $this->getAbstractRepository();
 
         $this->assertNull($abstractRepository->getLimit());
 
@@ -84,12 +92,7 @@ class AbstractFilterableRepositoryTest extends TestCase
 
     public function testCanResetLimit(): void
     {
-        $abstractRepository = new class extends AbstractFilterableRepository {
-            public function getLimit(): ?int
-            {
-                return $this->limit;
-            }
-        };
+        $abstractRepository = $this->getAbstractRepository();
 
         $this->assertNull($abstractRepository->getLimit());
 

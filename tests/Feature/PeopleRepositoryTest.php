@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature;
+
 use Tests\TestCase;
 use Tests\Example\Filters\OldPeopleFilter;
 use Tests\Example\Entities\PeopleEntityList;
